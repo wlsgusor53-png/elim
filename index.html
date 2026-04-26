@@ -81,12 +81,35 @@ button{border:none;background:none;cursor:pointer;font-family:inherit;}
 .nav-menu a:hover{color:#fff;}
 .nav-contact{font-size:12px;font-weight:700;color:var(--navy);background:var(--gold);padding:10px 24px;letter-spacing:.06em;transition:all .2s;}
 .nav-contact:hover{background:var(--gold2);}
-.nav-ham{display:none;flex-direction:column;gap:5px;padding:8px;}
-.nav-ham span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;}
-#mobile-nav{display:none;position:fixed;top:68px;left:0;right:0;z-index:99;background:rgba(10,18,36,.98);backdrop-filter:blur(12px);padding:20px 6% 28px;flex-direction:column;gap:0;}
-#mobile-nav.open{display:flex;}
-#mobile-nav a{display:block;padding:14px 0;color:rgba(255,255,255,.7);font-size:14px;font-weight:500;border-bottom:1px solid rgba(255,255,255,.07);}
-#mobile-nav a:last-child{border:none;margin-top:8px;background:var(--gold);color:var(--navy);text-align:center;font-weight:700;padding:14px;}
+.nav-ham{
+  display:none;flex-direction:column;justify-content:center;align-items:center;
+  width:44px;height:44px;gap:6px;cursor:pointer;z-index:300;position:relative;padding:0;
+}
+.nav-ham span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all .3s ease;transform-origin:center;}
+.nav-ham.active span:nth-child(1){transform:translateY(8px) rotate(45deg);}
+.nav-ham.active span:nth-child(2){opacity:0;transform:scaleX(0);}
+.nav-ham.active span:nth-child(3){transform:translateY(-8px) rotate(-45deg);}
+#mobile-nav{
+  display:none;position:fixed;inset:0;z-index:200;
+  background:var(--navy);
+  flex-direction:column;justify-content:center;align-items:flex-start;
+  padding:0 10%;opacity:0;transition:opacity .3s ease;
+}
+#mobile-nav.open{display:flex;animation:fadeInMenu .3s forwards;}
+@keyframes fadeInMenu{from{opacity:0}to{opacity:1}}
+#mobile-nav .mn-link{
+  display:block;font-size:clamp(26px,7vw,38px);font-weight:800;
+  color:rgba(255,255,255,.3);letter-spacing:-.02em;
+  padding:10px 0;border:none;background:none;text-decoration:none;
+  transition:color .2s;
+}
+#mobile-nav .mn-link:hover,#mobile-nav .mn-link:active{color:#fff;}
+#mobile-nav .mn-cta{
+  font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--navy);background:var(--gold);
+  padding:14px 28px;margin-top:32px;display:inline-block;text-decoration:none;
+}
+body.menu-open{overflow:hidden;}
 #home{position:relative;height:88vh;min-height:600px;overflow:hidden;display:flex;align-items:flex-end;}
 .hero-video-wrap{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
 .hero-video-fallback{position:absolute;inset:0;background:url('https://images.pexels.com/photos/1486785/pexels-photo-1486785.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover;z-index:0;}
@@ -234,6 +257,9 @@ footer{background:#0b1d3a;padding:56px 8% 32px;}
 .rv-r{transform:translateX(20px);}
 .rv.in,.rv-l.in,.rv-r.in{opacity:1;transform:none;}
 .d1{transition-delay:.07s}.d2{transition-delay:.14s}.d3{transition-delay:.21s}.d4{transition-delay:.28s}
+/* ── 포트폴리오 가로 스크롤 (모바일 전용) ── */
+.pf-scroll-wrap{display:none;}
+
 @media(max-width:1024px){
   .about-wrap{grid-template-columns:1fr;}
   .about-visual{max-width:560px;}
@@ -242,66 +268,103 @@ footer{background:#0b1d3a;padding:56px 8% 32px;}
   .contact-grid{grid-template-columns:1fr;}
   .hero-h1{font-size:clamp(36px,5vw,52px);}
 }
+
 @media(max-width:768px){
-  /* NAV */
+  /* ── NAV ── */
   .nav-menu,.nav-contact{display:none;}
   .nav-ham{display:flex;}
 
-  /* HERO — 하단 1/3 지점 유지 */
-  #home{height:88vh;min-height:560px;}
-  .hero-inner{padding:0 6% 13%;}
-  .hero-overline{font-size:10px;margin-bottom:14px;}
-  .hero-h1{font-size:clamp(32px,7vw,46px);margin-bottom:16px;}
-  .hero-sub{font-size:13px;line-height:1.75;max-width:100%;margin-bottom:24px;display:block;}
+  /* ── HERO ── */
+  #home{height:100svh;min-height:580px;align-items:flex-end;}
+  .hero-inner{padding:0 6% 18%;}
+  .hero-overline{font-size:10px;margin-bottom:12px;}
+  .hero-h1{font-size:clamp(30px,8vw,44px);line-height:1.15;margin-bottom:14px;}
+  .hero-sub{font-size:13px;line-height:1.75;max-width:100%;margin-bottom:22px;display:block;}
   .hero-btns{gap:10px;}
-  .btn-fill,.btn-ghost{padding:12px 22px;font-size:12px;}
+  .btn-fill{padding:13px 24px;font-size:13px;}
+  .btn-ghost{padding:13px 24px;font-size:13px;}
+  /* 스크롤 힌트 제거 (모바일) */
+  .hero-scroll-hint{display:none;}
+  /* hover 인터랙션 비활성화 */
+  .about-wrap:hover .about-img-main img{transform:none;}
+  .pf-feat:hover .pf-feat-img img{transform:none;}
+  .pf-card:hover{transform:none;box-shadow:none;}
+  .pf-card:hover .pf-card-img img{transform:none;}
 
-  /* SECTIONS */
+  /* ── ABOUT ── */
   .sec{padding:60px 5%;}
-
-  /* ABOUT */
   .about-frame{display:none;}
-  .about-img-main{aspect-ratio:3/2;}
+  .about-img-main{aspect-ratio:16/9;}
 
-  /* SERVICES */
+  /* ── SERVICES ── */
   .svc-grid{grid-template-columns:1fr 1fr;}
-  .svc-item{padding:28px 20px;}
-  .svc-cta{flex-direction:column;align-items:flex-start;}
+  .svc-item{padding:28px 16px;}
+  .svc-head{flex-direction:column;align-items:flex-start;}
+  .svc-head-r{text-align:left;max-width:100%;}
+  .svc-cta{flex-direction:column;align-items:flex-start;gap:16px;}
 
-  /* PORTFOLIO */
-  .pf-feat{height:260px;}
-  .pf-feat-body{padding:24px 20px;}
-  .pf-feat-title{font-size:18px;}
+  /* ── PORTFOLIO — 가로 스크롤 ── */
+  .pf-feat{height:240px;}
+  .pf-feat-body{padding:20px;}
+  .pf-feat-title{font-size:17px;}
   .pf-feat-meta{display:none;}
-  .pf-grid{grid-template-columns:1fr 1fr;}
+  /* 그리드 숨기고 가로 스크롤로 교체 */
+  .pf-grid{display:none;}
+  .pf-scroll-wrap{
+    display:flex;
+    gap:12px;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    scroll-snap-type:x mandatory;
+    padding-bottom:12px;
+    margin:0 -5%;
+    padding-left:5%;
+    padding-right:5%;
+  }
+  .pf-scroll-wrap::-webkit-scrollbar{display:none;}
+  .pf-scroll-card{
+    flex:0 0 72vw;
+    max-width:280px;
+    scroll-snap-align:start;
+    background:#fff;
+    border:1px solid var(--line);
+    overflow:hidden;
+  }
+  .pf-scroll-card-img{
+    aspect-ratio:3/2;overflow:hidden;position:relative;
+  }
+  .pf-scroll-card-img img{width:100%;height:100%;object-fit:cover;}
+  .pf-scroll-card-cat{
+    position:absolute;top:10px;left:10px;
+    font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    background:var(--navy);color:#fff;padding:3px 8px;
+  }
+  .pf-scroll-card-body{padding:16px;}
+  .pf-scroll-card-year{font-size:10px;color:var(--light);letter-spacing:.1em;margin-bottom:5px;}
+  .pf-scroll-card-title{font-size:13px;font-weight:700;color:var(--navy);line-height:1.4;margin-bottom:4px;}
+  .pf-scroll-card-client{font-size:11px;color:var(--light);}
+  /* 필터 가로 스크롤 */
+  .pf-filter{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px;}
+  .pf-filter::-webkit-scrollbar{display:none;}
+  .pf-btn{flex-shrink:0;}
 
-  /* CONTACT */
+  /* ── CONTACT ── */
   .cform{padding:28px 20px;}
   .frow{grid-template-columns:1fr;}
 
-  /* FOOTER */
+  /* ── FOOTER ── */
   .ft-cols{gap:24px;}
   .ft-top{flex-direction:column;}
 }
+
 @media(max-width:480px){
-  /* HERO */
-  #home{height:90vh;}
-  .hero-inner{padding:0 5% 15%;}
-  .hero-h1{font-size:clamp(28px,8vw,38px);}
-  .hero-sub{font-size:13px;}
+  #home{height:100svh;}
+  .hero-inner{padding:0 5% 20%;}
+  .hero-h1{font-size:clamp(28px,9vw,36px);}
   .hero-btns{flex-direction:column;}
-  .btn-fill,.btn-ghost{justify-content:center;width:100%;}
-
-  /* SERVICES */
+  .btn-fill,.btn-ghost{justify-content:center;width:100%;text-align:center;}
   .svc-grid{grid-template-columns:1fr;}
-
-  /* PORTFOLIO */
-  .pf-grid{grid-template-columns:1fr;}
-  .pf-feat{height:220px;}
-  .pf-filter{gap:4px;}
-  .pf-btn{padding:6px 12px;font-size:10px;}
-
-  /* FOOTER */
+  .pf-scroll-card{flex:0 0 80vw;}
   .ft-bot{flex-direction:column;gap:6px;}
 }
 </style>
@@ -321,10 +384,10 @@ footer{background:#0b1d3a;padding:56px 8% 32px;}
   </button>
 </nav>
 <div id="mobile-nav">
-  <a href="#about" onclick="closeMobileNav()">회사소개</a>
-  <a href="#services" onclick="closeMobileNav()">사업분야</a>
-  <a href="#portfolio" onclick="closeMobileNav()">포트폴리오</a>
-  <a href="#contact" onclick="closeMobileNav()">상담 신청</a>
+  <a href="#about" class="mn-link" onclick="closeMobileNav()">회사소개</a>
+  <a href="#services" class="mn-link" onclick="closeMobileNav()">사업분야</a>
+  <a href="#portfolio" class="mn-link" onclick="closeMobileNav()">포트폴리오</a>
+  <a href="#contact" class="mn-cta" onclick="closeMobileNav()">상담 신청 →</a>
 </div>
 
 <section id="home">
@@ -428,6 +491,34 @@ footer{background:#0b1d3a;padding:56px 8% 32px;}
       <div class="pf-card" data-cats="토목"><div class="pf-card-img"><img src="https://wlsgusor53-png.github.io/elim/pf-보수공사.png" alt="교량 도로" loading="lazy"><div class="pf-card-cat">토목</div></div><div class="pf-card-body"><div class="pf-card-year">2019 · 전라남도</div><div class="pf-card-title">지방도 792호선 용연1교 5개소 보수공사</div><div class="pf-card-client">전라남도</div></div></div>
       <div class="pf-card" data-cats="건축"><div class="pf-card-img"><img src="https://wlsgusor53-png.github.io/elim/pf-school.png" alt="교육시설" loading="lazy"><div class="pf-card-cat">건축</div></div><div class="pf-card-body"><div class="pf-card-year">2016 · 전라남도</div><div class="pf-card-title">고금중학교외 4교 교사동 시설 보수공사</div><div class="pf-card-client">전라남도완도교육지원청</div></div></div>
       <div class="pf-card" data-cats="건축"><div class="pf-card-img"><img src="https://wlsgusor53-png.github.io/elim/pf-bridge.png" alt="주거 시설" loading="lazy"><div class="pf-card-cat">건축</div></div><div class="pf-card-body"><div class="pf-card-year">2014 · 경상남도</div><div class="pf-card-title">창원시 시영임대아파트 욕실시설 개선공사</div><div class="pf-card-client">경상남도 창원시</div></div></div>
+    </div>
+
+    <!-- 모바일 전용 가로 스크롤 카드 -->
+    <div class="pf-scroll-wrap" id="pf-scroll">
+      <div class="pf-scroll-card" data-cats="건축 특수">
+        <div class="pf-scroll-card-img"><img src="https://wlsgusor53-png.github.io/elim/pf-airport.png" alt="공항" loading="lazy"><div class="pf-scroll-card-cat">건축</div></div>
+        <div class="pf-scroll-card-body"><div class="pf-scroll-card-year">2024 · 울산광역시</div><div class="pf-scroll-card-title">울산공항 안전시설 설치 및 중앙감시실 개선공사</div><div class="pf-scroll-card-client">한국공항공사 김해공항</div></div>
+      </div>
+      <div class="pf-scroll-card" data-cats="건축 장애인">
+        <div class="pf-scroll-card-img"><img src="https://wlsgusor53-png.github.io/elim/pf-elevator.png" alt="승강기" loading="lazy"><div class="pf-scroll-card-cat">건축</div></div>
+        <div class="pf-scroll-card-body"><div class="pf-scroll-card-year">2025 · 울산광역시</div><div class="pf-scroll-card-title">울산 여성회관 승강기(장애인용) 설치 및 부대공사</div><div class="pf-scroll-card-client">울산광역시여성회관</div></div>
+      </div>
+      <div class="pf-scroll-card" data-cats="건축 토목">
+        <div class="pf-scroll-card-img"><img src="https://wlsgusor53-png.github.io/elim/pf-warehouse.png" alt="창고" loading="lazy"><div class="pf-scroll-card-cat">건축·토목</div></div>
+        <div class="pf-scroll-card-body"><div class="pf-scroll-card-year">2023 · 울산 중구</div><div class="pf-scroll-card-title">제설자재 보관창고 건립공사</div><div class="pf-scroll-card-client">울산광역시 중구</div></div>
+      </div>
+      <div class="pf-scroll-card" data-cats="토목">
+        <div class="pf-scroll-card-img"><img src="https://wlsgusor53-png.github.io/elim/pf-보수공사.png" alt="교량" loading="lazy"><div class="pf-scroll-card-cat">토목</div></div>
+        <div class="pf-scroll-card-body"><div class="pf-scroll-card-year">2019 · 전라남도</div><div class="pf-scroll-card-title">지방도 792호선 용연1교 5개소 보수공사</div><div class="pf-scroll-card-client">전라남도</div></div>
+      </div>
+      <div class="pf-scroll-card" data-cats="건축">
+        <div class="pf-scroll-card-img"><img src="https://wlsgusor53-png.github.io/elim/pf-school.png" alt="학교" loading="lazy"><div class="pf-scroll-card-cat">건축</div></div>
+        <div class="pf-scroll-card-body"><div class="pf-scroll-card-year">2016 · 전라남도</div><div class="pf-scroll-card-title">고금중학교외 4교 교사동 시설 보수공사</div><div class="pf-scroll-card-client">전라남도완도교육지원청</div></div>
+      </div>
+      <div class="pf-scroll-card" data-cats="건축">
+        <div class="pf-scroll-card-img"><img src="https://wlsgusor53-png.github.io/elim/pf-bridge.png" alt="아파트" loading="lazy"><div class="pf-scroll-card-cat">건축</div></div>
+        <div class="pf-scroll-card-body"><div class="pf-scroll-card-year">2014 · 경상남도</div><div class="pf-scroll-card-title">창원시 시영임대아파트 욕실시설 개선공사</div><div class="pf-scroll-card-client">경상남도 창원시</div></div>
+      </div>
     </div>
     <div class="pf-more rv">
       <p class="pf-more-note">전체 시공 이력을 확인하고 싶으신가요?</p>
@@ -539,8 +630,18 @@ footer{background:#0b1d3a;padding:56px 8% 32px;}
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => nav.classList.toggle('solid', window.scrollY > 30), {passive:true});
 nav.classList.add('solid');
-function toggleMobileNav() { document.getElementById('mobile-nav').classList.toggle('open'); }
-function closeMobileNav() { document.getElementById('mobile-nav').classList.remove('open'); }
+function toggleMobileNav() {
+  const nav = document.getElementById('mobile-nav');
+  const ham = document.querySelector('.nav-ham');
+  const isOpen = nav.classList.toggle('open');
+  ham.classList.toggle('active', isOpen);
+  document.body.classList.toggle('menu-open', isOpen);
+}
+function closeMobileNav() {
+  document.getElementById('mobile-nav').classList.remove('open');
+  document.querySelector('.nav-ham').classList.remove('active');
+  document.body.classList.remove('menu-open');
+}
 document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', () => closeMobileNav()));
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
