@@ -87,13 +87,13 @@ button{border:none;background:none;cursor:pointer;font-family:inherit;}
 #mobile-nav.open{display:flex;}
 #mobile-nav a{display:block;padding:14px 0;color:rgba(255,255,255,.7);font-size:14px;font-weight:500;border-bottom:1px solid rgba(255,255,255,.07);}
 #mobile-nav a:last-child{border:none;margin-top:8px;background:var(--gold);color:var(--navy);text-align:center;font-weight:700;padding:14px;}
-#home{position:relative;height:88vh;min-height:600px;overflow:hidden;display:flex;align-items:center;}
+#home{position:relative;height:88vh;min-height:600px;overflow:hidden;display:flex;align-items:flex-end;}
 .hero-video-wrap{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
 .hero-video-fallback{position:absolute;inset:0;background:url('https://images.pexels.com/photos/1486785/pexels-photo-1486785.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover;z-index:0;}
 .hero-video-wrap video{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;object-fit:cover;z-index:1;}
 .hero-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(8,16,32,.95) 0%,rgba(8,16,32,.6) 40%,rgba(8,16,32,.3) 70%,rgba(8,16,32,.45) 100%);}
 .hero-accent-l{position:absolute;left:0;top:0;bottom:0;width:3px;z-index:2;background:linear-gradient(to bottom,transparent,var(--gold) 25%,var(--gold) 75%,transparent);opacity:.7;}
-.hero-inner{position:relative;z-index:2;width:100%;padding:0 8%;margin-top:40px;}
+.hero-inner{position:relative;z-index:2;width:100%;padding:0 8% 10%;}
 .hero-copy{max-width:620px;}
 .hero-overline{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:600;color:rgba(255,255,255,.4);letter-spacing:.22em;text-transform:uppercase;margin-bottom:22px;}
 .hero-overline::before{content:'';width:18px;height:1px;background:var(--gold);opacity:.7;}
@@ -236,31 +236,73 @@ footer{background:#0b1d3a;padding:56px 8% 32px;}
 .d1{transition-delay:.07s}.d2{transition-delay:.14s}.d3{transition-delay:.21s}.d4{transition-delay:.28s}
 @media(max-width:1024px){
   .about-wrap{grid-template-columns:1fr;}
+  .about-visual{max-width:560px;}
   .svc-grid{grid-template-columns:repeat(2,1fr);}
   .pf-grid{grid-template-columns:repeat(2,1fr);}
   .contact-grid{grid-template-columns:1fr;}
+  .hero-h1{font-size:clamp(36px,5vw,52px);}
 }
 @media(max-width:768px){
+  /* NAV */
   .nav-menu,.nav-contact{display:none;}
   .nav-ham{display:flex;}
-  .sec{padding:64px 5%;}
-  .hero-inner{padding:0 5%;margin-top:32px;}
-  .hero-sub{display:none;}
-  .pf-feat{height:280px;}
-  .pf-feat-body{padding:24px;}
-  .pf-feat-meta{display:none;}
+
+  /* HERO — 하단 1/3 지점 유지 */
+  #home{height:88vh;min-height:560px;}
+  .hero-inner{padding:0 6% 13%;}
+  .hero-overline{font-size:10px;margin-bottom:14px;}
+  .hero-h1{font-size:clamp(32px,7vw,46px);margin-bottom:16px;}
+  .hero-sub{font-size:13px;line-height:1.75;max-width:100%;margin-bottom:24px;display:block;}
+  .hero-btns{gap:10px;}
+  .btn-fill,.btn-ghost{padding:12px 22px;font-size:12px;}
+
+  /* SECTIONS */
+  .sec{padding:60px 5%;}
+
+  /* ABOUT */
+  .about-frame{display:none;}
+  .about-img-main{aspect-ratio:3/2;}
+
+  /* SERVICES */
   .svc-grid{grid-template-columns:1fr 1fr;}
+  .svc-item{padding:28px 20px;}
+  .svc-cta{flex-direction:column;align-items:flex-start;}
+
+  /* PORTFOLIO */
+  .pf-feat{height:260px;}
+  .pf-feat-body{padding:24px 20px;}
+  .pf-feat-title{font-size:18px;}
+  .pf-feat-meta{display:none;}
   .pf-grid{grid-template-columns:1fr 1fr;}
+
+  /* CONTACT */
   .cform{padding:28px 20px;}
   .frow{grid-template-columns:1fr;}
-  .ft-cols{gap:28px;}
-  .about-frame{display:none;}
+
+  /* FOOTER */
+  .ft-cols{gap:24px;}
+  .ft-top{flex-direction:column;}
 }
 @media(max-width:480px){
-  .svc-grid{grid-template-columns:1fr;}
-  .pf-grid{grid-template-columns:1fr;}
+  /* HERO */
+  #home{height:90vh;}
+  .hero-inner{padding:0 5% 15%;}
+  .hero-h1{font-size:clamp(28px,8vw,38px);}
+  .hero-sub{font-size:13px;}
   .hero-btns{flex-direction:column;}
-  .btn-fill,.btn-ghost{justify-content:center;}
+  .btn-fill,.btn-ghost{justify-content:center;width:100%;}
+
+  /* SERVICES */
+  .svc-grid{grid-template-columns:1fr;}
+
+  /* PORTFOLIO */
+  .pf-grid{grid-template-columns:1fr;}
+  .pf-feat{height:220px;}
+  .pf-filter{gap:4px;}
+  .pf-btn{padding:6px 12px;font-size:10px;}
+
+  /* FOOTER */
+  .ft-bot{flex-direction:column;gap:6px;}
 }
 </style>
 </head>
